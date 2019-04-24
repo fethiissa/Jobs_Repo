@@ -1,0 +1,72 @@
+<html>
+<head>
+    <title>New Job</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flash_styles.css') }}">
+</head>
+<body>
+    <section class="jumbotron text-left">
+        <div class="row">
+            <div class="col-md-4 ml-auto h3"> <a href = "/logout"> LOGOUT </a> </div>
+        </div>
+        <h3 class="jumbotron-heading"> Hello, {{logged_in_user}}! Create a Job! </h3>
+        <div name = "add_job" class = "add_job">
+            <form action="/add_new" method="POST">
+                <div class="form-group align-items-center">
+
+                  <div class="col-sm-3 my-1">
+                      <input type="hidden" class="form-control" id="inlineFormInputName" name ="assigned_to_id" value={{logged_in_user_id}}>
+                    <label class="sr-only" for="inlineFormInputName">Title</label>
+                    Title: <input type="text" class="form-control" id="inlineFormInputName" placeholder="JoB Title" name="title">
+                    {% with errors = get_flashed_messages(category_filter=["title_error"]) %}
+                        <ul class = "error">
+                          <li> {{ errors[0] }} </li>
+                        </ul>
+                    {% endwith %}
+                  </div>
+                  <br>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputName">Description</label>
+                    Description: <input type="text" class="form-control" id="inlineFormInputName" placeholder="Job Description" name="job_desc">
+                    {% with errors = get_flashed_messages(category_filter=["desc_error"]) %}
+                        <ul class = "error">
+                          <li> {{ errors[0] }} </li>
+                        </ul>
+                    {% endwith %}
+                </div>
+                <br>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">Location</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        Location: <div class="input-group-text">@</div>
+                      </div>
+                      <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="location" name="location">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="col_sm3 my-1">
+                    Category:<br>
+                    <input class="chkBox" type="checkbox" name="job_category" value = "Woodwork" checked = True> Woodwork
+                    <input class="chkBox" type="checkbox" name="job_category" value = "1" {% if "1" in session["job_category"] %} checked = True {% endif %}> Pet Care
+                    <input class="chkBox" type="checkbox" name="job_category" checked = True {# if "2" in session["job_category"] #} value = "2" {# endif #}> Electrical
+                    <input class="chkBox" type="checkbox" name="job_category" value = "3" {% if "3" in session["job_category"] %} checked = True {% endif %}> Garden
+                  </div>
+                  <!-- <input class="chkBox" type="checkbox"  name="chkInterest" value="2" {% if "2" in session["interest"] %} checked {% endif %}> Designer </td> -->
+                  <br>
+
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputName">Other</label>
+                    Other: <input type="text" class="form-control" id="inlineFormInputName" placeholder="Additional Details" name="other">
+                    <inpout type = "hidden" name = "posted_by_id" value = {{logged_in_user_id}}></inpout>
+                </div>
+                <br>
+                <div class="col-auto my-1">
+                    <input type="submit" class="btn btn-primary" ></button>
+            </form> 
+            <button class="btn btn-primary btn-red"> <a href = "/dashboard">Cancel </a></button>
+            <!-- <a href = "/dashboard"><button type="submit" class="btn btn-primary">Cancel</button></a> -->
+        </div>
+    </section>
+</body>
+</html>

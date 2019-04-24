@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>Handy Helper Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flash_styles.css') }}">
+</head>
+<body>
+    <section class="jumbotron text-left">
+        <div class="container">
+            <div class="row">
+                <h1 class="col col-sm-offset-6 jumbotron-heading"> Hello, {{logged_in_user}} </h1>
+                <div class="col col-sm-offset-9 h5">  <a href = "/logout">    LOGOUT   </a>
+                    <a href = "/jobs/new" class="jumbotron text-left"> <button type="submit" class="btn btn-primary btn-green"> New Job! </button></a>
+                </div>
+            </div>
+        </div>
+            
+        </div>
+    </section>
+    <div class="container">
+        <h1>All Jobs</h1>
+            <table class = "table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Job</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for one_job in all_jobs %}
+                    <tr>
+                        <th scope="row"> {{ one_job["id"] }}</th>
+                        <td>{{ one_job["title"] }} </td>
+                        <td>{{ one_job["location"] }}</td>
+                        <td><a href = "/jobs/{{ one_job['id'] }}"> View </a> | 
+                            {% if one_job["posted_by_id"] == logged_in_user_id %}
+                                <a href = "/jobs/edit/{{ one_job['id'] }}"> Edit </a> |
+                            {% endif %}
+                            <a href = "/jobs/add_to_my_jobs/{{ one_job['id'] }}"> Add </a>
+                            {% if one_job["posted_by_id"] == logged_in_user_id %} 
+                            |  <a href = "/jobs/remove/{{ one_job['id'] }}"> REMOVE </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <h1>My Jobs</h1>
+            <table class = "table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Job</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for my_job in my_jobs %}
+                    <tr>
+                        <th scope="row"> {{ my_job["id"] }}</th>
+                        <td>{{ my_job["title"] }} </td>
+                        <td><a href = "/jobs/{{ my_job['id'] }}"> View </a> | 
+                            <a href = "/jobs/done/{{ my_job['id'] }}"> Done </a> |
+                            <a href = "/jobs/give_up/{{ my_job['id'] }}"> Give Up </a> 
+                            </a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</body>
+</html>

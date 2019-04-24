@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>Edit Job</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flash_styles.css') }}">
+</head>
+<body>
+    <section class="jumbotron text-left">
+        <div class="row">
+            <div class="col-md-4 ml-auto"><h4> <a href = "/logout"> LOGOUT </a></h4> </div>
+        </div>
+
+        <div name = "add_job" class = "add_job">
+            <form action="/jobs/edit/{{ displayed_job[0]['id'] }}" method="POST">
+                <div class="form-group align-items-center">
+
+                  <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputName">Title</label>
+                    Title: <input type="text" class="form-control" id="inlineFormInputName" name="title" value = "{{ displayed_job[0]['title'] }}">
+                      {% with errors = get_flashed_messages(category_filter=["update_title_error"]) %}
+                        <ul class = "error">
+                          <li> {{ errors[0] }} </li>
+                        </ul>
+                      {% endwith %}
+                  </div>
+                  <br>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputName">Description</label>
+                    Description: <input type="text" class="form-control" id="inlineFormInputName" name="job_desc" value = "{{ displayed_job[0]['job_desc'] }}">
+                    {% with errors = get_flashed_messages(category_filter=["update_desc_error"]) %}
+                        <ul class = "error">
+                          <li> {{ errors[0] }} </li>
+                        </ul>
+                      {% endwith %}
+                </div>
+                <br>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">Location</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        Location: <div class="input-group-text">@</div>
+                      </div>
+                      <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="location" value = "{{ displayed_job[0]['location'] }}">
+                    </div>
+                  </div>
+                  <br>
+                
+                  <br>
+                  <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary btn-black col-sm-1" color="green">Submit</button>
+                   </form>  <a href = "/dashboard"><button type="submit" class="btn btn-primary btn-red">Cancel</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

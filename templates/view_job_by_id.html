@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>View Job</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flash_styles.css') }}">
+</head>
+<body>
+    <section class="jumbotron text-left">
+        <section class="jumbotron text-right">
+            <h5><a href = "/dashboard" class="jumbotron text-right"> Dashboard </a> | <a href = "/logout" class="jumbotron text-right"> LOGOUT </a></h5>
+        </section>
+        <div class="container">
+            <h3 class="jumbotron-heading"> Task: {{ displayed_job[0]["title"] }} </h3>
+            <br>
+            <br>
+            <h5>
+            <p>Description: {{ displayed_job[0]["job_desc"] }} </p><br>
+            <p>Location: {{ displayed_job[0]["location"] }}</p>
+            <p>Posted On: {{ displayed_job[0]["created_at"] }}</p>
+            <p>Categories: {{ displayed_job[0]["category"] }}</p>
+            <p>Posted By: {{ displayed_job[0]["posted_by_id"] }}</p>
+            <br>
+            <a href = "/jobs/add_to_my_jobs/{{ displayed_job[0]['id'] }}"> Add to My Jobs </a>  |  <a href = "/jobs/give_up/{{ displayed_job[0]['id'] }}"> GIVE UP </a>
+            </h5>
+        </div>
+    </section>
+</body>
+</html>
